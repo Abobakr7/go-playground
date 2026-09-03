@@ -4,10 +4,12 @@ import "fmt"
 
 type Store struct {
 	todos []Todo
+	nextId int
 }
 
 var store *Store = &Store{
 	todos: make([]Todo, 0),
+	nextId: 1,
 }
 
 func NewStore() *Store {
@@ -16,11 +18,12 @@ func NewStore() *Store {
 
 func (s *Store) Add(title string) Todo {
 	todo := Todo{
-		ID:     len(s.todos) + 1,
+		ID:     s.nextId,
 		Title:  title,
 		Status: Open,
 	}
 	s.todos = append(s.todos, todo)
+	s.nextId++
 	return todo
 }
 
