@@ -12,9 +12,9 @@ const (
 func (s Status) String() string {
 	switch s {
 	case Open:
-		return "Open"
+		return " "
 	case Done:
-		return "Done"
+		return "x"
 	}
 	return fmt.Sprintf("Unknown Status: <%d>", s)
 }
