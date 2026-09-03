@@ -2,27 +2,24 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"todo/cli"
 	"todo/todo"
 )
 
 func main() {
 	store := todo.NewStore()
+	processor := cli.NewProcessor(store)
 
-	store.Add("Learn Go")
-	store.Add("Build Todo CLI")
-	store.Add("Study slices")
-
-	for _, t := range store.List() {
-		fmt.Println(t)
-	}
-	
-	err := store.Delete(2)
-	if err != nil {
-		fmt.Println(err)
-		return
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: todo <command> [arguments]")
+		os.Exit(1)
 	}
 
-	for _, t := range store.List() {
-		fmt.Println(t)
+	command := cli.Parse(os.Args[1:])
+
+	if err := processor.Process(command); err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
 	}
 }
