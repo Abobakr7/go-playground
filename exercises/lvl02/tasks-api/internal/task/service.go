@@ -43,7 +43,10 @@ func (s *Service) Update(ctx context.Context, id int, in Input) (Task, error) {
 		return Task{}, err
 	}
 
-	return s.repo.Create(ctx, t)
+	t.Title = in.Title
+	t.Done = in.Done
+
+	return s.repo.Update(ctx, t)
 }
 
 func (s *Service) Delete(ctx context.Context, id int) error {
